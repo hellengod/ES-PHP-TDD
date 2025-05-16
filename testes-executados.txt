@@ -13,4 +13,5 @@ Leilao (Alura\Leilao\Teste\Model\Leilao)
  [x] Leilao nao deve receber lances repetidos
  [x] Leilao deve receber lances with data set "2-lances"
  [x] Leilao deve receber lances with data set "2-lance"
+ [x] Leilao nao deve aceitar mais de 5 lances por usuario
 
