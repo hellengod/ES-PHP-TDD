@@ -9,3 +9,7 @@ Avaliador (Alura\Leilao\Teste\Service\Avaliador)
  [x] Avaliador deve buscar 3 maiores valores with data set "Ordem Decrescente"
  [x] Avaliador deve buscar 3 maiores valores with data set "Ordem Aleatoria"
 
+Leilao (Alura\Leilao\Teste\Model\Leilao)
+ [x] Leilao deve receber lances with data set "2-lances"
+ [x] Leilao deve receber lances with data set "2-lance"
+
