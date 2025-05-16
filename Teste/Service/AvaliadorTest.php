@@ -6,6 +6,7 @@ use Alura\Leilao\Model\Lance;
 use Alura\Leilao\Model\Leilao;
 use Alura\Leilao\Model\Usuario;
 use Alura\Leilao\Service\Avaliador;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class AvaliadorTest extends TestCase
@@ -72,6 +73,27 @@ class AvaliadorTest extends TestCase
 
     }
 
+    public function testLeilaoVazioNaoPodeSerAvaliado()
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Nao e possivel avaliar leilao vazio');
+        $leilao = new Leilao('Fusca Azul');
+        $this->leiloeiro->avalia($leilao);
+    }
+
+    public function testLeilaoFinalizadoNaoPodeSerAvaliado()
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('leilao ja finalizado');
+
+        $leilao = new Leilao(('Fiat 147 0KM'));
+        $leilao->recebeLance(new Lance(new Usuario('Teste'), 2000));
+
+        $leilao->finaliza();
+
+        $this->leiloeiro->avalia($leilao);
+    }
+
     public static function leilaoEmOrdemCrescente()
     {
         $leilao = new Leilao('Fiat 147 0KM');
@@ -85,7 +107,7 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($maria, 2500));
 
         return [
-          'Ordem Crescente' => [$leilao]
+            'Ordem Crescente' => [$leilao]
         ];
     }
 

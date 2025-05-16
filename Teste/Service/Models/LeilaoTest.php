@@ -5,6 +5,7 @@ namespace Alura\Leilao\Teste\Model;
 use Alura\Leilao\Model\Lance;
 use Alura\Leilao\Model\Leilao;
 use Alura\Leilao\Model\Usuario;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class LeilaoTest extends TestCase
@@ -12,6 +13,9 @@ class LeilaoTest extends TestCase
 
     public function testLeilaoNaoDeveReceberLancesRepetidos()
     {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage("Usuario nao pode propor 2 lances consecutivos");
+
         $leilao = new Leilao('Variante');
         $ana = new Usuario('Ana');
 
@@ -35,6 +39,8 @@ class LeilaoTest extends TestCase
 
     public function testLeilaoNaoDeveAceitarMaisDe5LancesPorUsuario()
     {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage("Usuario nao pode propor mais de 5 lances por leilao");
         $leilao = new Leilao('Brazilia Amarela');
         $joao = new Usuario("Joao");
         $maria = new Usuario("Maria");
