@@ -8,6 +8,40 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Alura\Leilao\Dao\Leilao as LeilaoDao;
 
+class LeilaoDaoMock extends LeilaoDao
+{
+    private $leiloes = [];
+    public function salva(Leilao $leilao): void
+    {
+        $this->leiloes[] = $leilao;
+    }
+
+    public function recuperarNaoFinalizados(): array
+    {
+        return array_filter(
+            $this->leiloes,
+            function (Leilao $leilao) {
+                return !$leilao->estaFinalizado();
+            }
+        );
+    }
+
+    public function recuperarFinalizados(): array
+    {
+        return array_filter(
+            $this->leiloes,
+            function (Leilao $leilao) {
+                return $leilao->estaFinalizado();
+            }
+        );
+    }
+
+    public function atualiza(Leilao $leilao)
+    {
+
+    }
+}
+
 class EncerradorTest extends TestCase
 {
     public function testLeiloesComMaisDeUmaSemanaDevemSerEncerrados()
@@ -23,11 +57,11 @@ class EncerradorTest extends TestCase
             new DateTimeImmutable('10 days ago')
         );
 
-        $leilaoDao = new LeilaoDao();
+        $leilaoDao = new LeilaoDaoMock();
         $leilaoDao->salva($fiat147);
         $leilaoDao->salva($variant);
 
-        $encerrador = new Encerrador();
+        $encerrador = new Encerrador($leilaoDao);
         $encerrador->encerra();
 
         //Assert
