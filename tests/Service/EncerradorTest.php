@@ -42,4 +42,10 @@ class EncerradorTest extends TestCase
         self::assertTrue($leiloes[1]->estaFinalizado());
 
     }
+
+    public function testProcessoDeEncerramentoDeveContinuarMesmoOcorrendoErro()
+    {
+
+    }
+
 }
