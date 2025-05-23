@@ -43,7 +43,7 @@ class EncerradorTest extends TestCase
 
     }
 
-    public function testProcessoDeEncerramentoDeveContinuarMesmoOcorrendoErro()
+    public function testeDeveContinuarOProcessamentoAoEncontrarErroAoEnviarEmail()
     {
 
     }
